@@ -265,7 +265,7 @@ struct Worker<T>
 where
     T: Send + 'static,
 {
-    task: Box<Fn(T) -> () + Sync + Send + RefUnwindSafe + 'static>,
+    task: Box<dyn Fn(T) -> () + Sync + Send + RefUnwindSafe + 'static>,
     sender: Sender<Option<T>>,
     receiver: Receiver<Option<T>>,
     stopped: AtomicBool,
@@ -346,7 +346,7 @@ impl<T> fmt::Debug for Worker<T>
 where
     T: Send + 'static,
 {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "Worker {{ ... }}")
     }
 }

@@ -1,5 +1,5 @@
 #![feature(test)]
-extern crate cadence;
+
 extern crate test;
 
 use test::Bencher;

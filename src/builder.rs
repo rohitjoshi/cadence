@@ -24,7 +24,7 @@ enum MetricValue {
 }
 
 impl fmt::Display for MetricValue {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match *self {
             MetricValue::Signed(i) => i.fmt(f),
             MetricValue::Unsigned(i) => i.fmt(f),
@@ -44,7 +44,7 @@ enum MetricType {
 }
 
 impl fmt::Display for MetricType {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match *self {
             MetricType::Counter => "c".fmt(f),
             MetricType::Timer => "ms".fmt(f),
