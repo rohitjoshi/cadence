@@ -13,9 +13,9 @@ use std::io::Write;
 use std::net::{SocketAddr, ToSocketAddrs, UdpSocket};
 use std::sync::Mutex;
 
-use io::{MultiLineWriter, UdpWriteAdapter};
-use sinks::core::MetricSink;
-use types::{ErrorKind, MetricError, MetricResult};
+use crate::io::{MultiLineWriter, UdpWriteAdapter};
+use crate::sinks::core::MetricSink;
+use crate::types::{ErrorKind, MetricError, MetricResult};
 
 // Default size of the buffer for buffered metric sinks. This
 // is a rather conservative value, picked to make sure the entire

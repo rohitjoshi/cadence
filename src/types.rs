@@ -12,7 +12,7 @@ use std::error;
 use std::fmt;
 use std::io;
 
-use builder::MetricFormatter;
+use crate::builder::MetricFormatter;
 
 /// Trait for metrics to expose Statsd metric string slice representation.
 ///
@@ -231,12 +231,17 @@ impl error::Error for MetricError {
         }
     }
 
-    fn cause(&self) -> Option<&error::Error> {
+    fn cause(&self) -> Option<&dyn error::Error> {
+        self.source()
+    }
+
+    fn source(&self) -> Option<&(dyn error::Error + 'static)> {
         match self.repr {
             ErrorRepr::IoError(ref err) => Some(err),
             _ => None,
         }
     }
+
 }
 
 impl From<io::Error> for MetricError {
@@ -330,12 +335,12 @@ mod tests {
     fn test_metric_error_cause_io_error() {
         let io_err = io::Error::new(io::ErrorKind::TimedOut, "Timeout!");
         let our_err = MetricError::from(io_err);
-        assert_eq!("Timeout!", our_err.cause().unwrap().description());
+        assert_eq!("Timeout!", our_err.source().unwrap().description());
     }
 
     #[test]
     fn test_metric_error_cause_other() {
         let our_err = MetricError::from((ErrorKind::InvalidInput, "Nope!"));
-        assert!(our_err.cause().is_none());
+        assert!(our_err.source().is_none());
     }
 }

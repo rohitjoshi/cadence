@@ -9,10 +9,10 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
-use client::{MetricBackend, StatsdClient};
+use crate::client::{MetricBackend, StatsdClient};
 use std::fmt::{self, Write};
 use std::marker::PhantomData;
-use types::{Metric, MetricError, MetricResult};
+use crate::types::{Metric, MetricError, MetricResult};
 
 const DATADOG_TAGS_PREFIX: &str = "|#";
 
@@ -410,7 +410,7 @@ fn write_datadog_tags(metric: &mut String, tags: &[(Option<&str>, &str)]) {
 #[cfg(test)]
 mod tests {
     use super::{write_datadog_tags, MetricFormatter};
-    use types::{Counter, Gauge, Histogram, Meter, Metric, Set, Timer};
+    use crate::types::{Counter, Gauge, Histogram, Meter, Metric, Set, Timer};
 
     #[test]
     fn test_metric_formatter_counter_no_tags() {

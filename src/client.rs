@@ -14,9 +14,9 @@ use std::panic::RefUnwindSafe;
 use std::sync::Arc;
 use std::time::Duration;
 
-use builder::{MetricBuilder, MetricFormatter};
-use sinks::{MetricSink, UdpMetricSink};
-use types::{
+use crate::builder::{MetricBuilder, MetricFormatter};
+use crate::sinks::{MetricSink, UdpMetricSink};
+use crate::types::{
     Counter, ErrorKind, Gauge, Histogram, Meter, Metric, MetricError, MetricResult, Set, Timer,
 };
 
@@ -358,7 +358,7 @@ impl StatsdClientBuilder {
     {
         StatsdClientBuilder {
             // required
-            prefix: prefix.trim_right_matches('.').to_owned(),
+            prefix: prefix.trim_end_matches('.').to_owned(),
             sink: Box::new(sink),
 
             // optional with defaults
@@ -764,8 +764,8 @@ mod tests {
         Counted, Gauged, Histogrammed, Metered, MetricClient, Setted, StatsdClient, Timed,
     };
 
-    use sinks::{MetricSink, NopMetricSink, QueuingMetricSink};
-    use types::{ErrorKind, Metric, MetricError};
+    use crate::sinks::{MetricSink, NopMetricSink, QueuingMetricSink};
+    use crate::types::{ErrorKind, Metric, MetricError};
 
     #[test]
     fn test_statsd_client_count_with_tags() {

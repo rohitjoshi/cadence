@@ -18,7 +18,7 @@ use std::thread;
 
 use crossbeam_channel::{self, Receiver, Sender};
 
-use sinks::core::MetricSink;
+use crate::sinks::core::MetricSink;
 
 /// Implementation of a `MetricSink` that wraps another implementation
 /// and uses it to emit metrics asynchronously, in another thread.
@@ -354,7 +354,7 @@ where
 #[cfg(test)]
 mod tests {
     use super::{QueuingMetricSink, Worker};
-    use sinks::core::MetricSink;
+    use crate::sinks::core::MetricSink;
     use std::io;
     use std::panic;
     use std::sync::atomic::{AtomicBool, AtomicUsize, Ordering};
